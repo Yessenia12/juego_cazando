@@ -40,6 +40,7 @@ function moverIzquierda() {
     limpiarCanva();
     graficarGato();
     graficarComida(); 
+    detectarColision();
 }
 // funcion moverDerecha
 function moverDerecha(){
@@ -47,6 +48,7 @@ function moverDerecha(){
     limpiarCanva();
     graficarGato();
     graficarComida(); 
+    detectarColision();
     
 }
 // funcion moverDerecha
@@ -55,6 +57,7 @@ function moverArriba(){
     limpiarCanva();
     graficarGato();
     graficarComida(); 
+    detectarColision();
     
 }
 // funcion moverDerecha
@@ -63,5 +66,14 @@ function moverAbajo(){
     limpiarCanva();
     graficarGato();
     graficarComida(); 
+    detectarColision();
     
+}
+function detectarColision() {
+    // Comprobar si los rectángulos se superponen en el eje X y en el eje Y
+    if (
+        gatoX < comidaX + ANCHO_COMIDA && gatoX + ANCHO_GATO > comidaX && gatoY < comidaY + ALTO_COMIDA && gatoY + ALTO_GATO > comidaY
+    ) {
+        alert("¡Felicidades el GATO comio!");
+    }
 }
