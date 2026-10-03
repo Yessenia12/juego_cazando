@@ -11,7 +11,7 @@ const ANCHO_GATO=35;
 const ALTO_COMIDA=25;
 const ANCHO_COMIDA=25;
 
-// VARIABLES NUEVAS PARA EL CONTROL DEL TEMPORIZADOR
+// TEMPORIZADOR
 let temporizadorActivo = false; 
 let controlTiempo;
 
@@ -25,25 +25,21 @@ function graficarRectangulo(color, x,y,ancho,alto){
 }function iniciarJuego(){
     gatoX = (600 - ANCHO_GATO) / 2;
     gatoY = (400 - ALTO_GATO) / 2;
-    comidaX = 600 - ANCHO_COMIDA;
-    comidaY = 400 - ALTO_COMIDA;
+    // posicion de la comida aleatoria
+    comidaX = generarAleatorio(0, 600 - ANCHO_COMIDA);
+    comidaY = generarAleatorio(0, 400 - ALTO_COMIDA);
     graficarGato();
     graficarComida();
 }function limpiarCanva() {
     ctx.clearRect(0, 0, 600, 400);
-}
-
-// FUNCIÓN NUEVA PARA ENCENDER EL SETINTERVAL UNA SOLA VEZ
-function iniciarTemporizador() {
+}function iniciarTemporizador() {
     if (!temporizadorActivo) {
-        controlTiempo = setInterval(restarTiempo, 1000); // Llama a restarTiempo cada 1 segundo (1000ms)
+        controlTiempo = setInterval(restarTiempo, 1000); 
         temporizadorActivo = true;
     }
-}
-
-function moverIzquierda() {
-    if (gatoX > 0 && tiempo > 0) { // Validación: Solo se mueve si queda tiempo
-        iniciarTemporizador();     // Intenta encender el reloj
+}function moverIzquierda() {
+    if (gatoX > 0 && tiempo > 0 && puntaje < 6) { 
+        iniciarTemporizador();     
         gatoX = gatoX - 10; 
         limpiarCanva();
         graficarGato();
@@ -51,7 +47,7 @@ function moverIzquierda() {
         detectarColision();
     }
 }function moverDerecha(){
-    if (gatoX + ANCHO_GATO < 600 && tiempo > 0) {
+    if (gatoX + ANCHO_GATO < 600 && tiempo > 0 && puntaje < 6) {
         iniciarTemporizador();
         gatoX = gatoX + 10;
         limpiarCanva();
@@ -60,7 +56,7 @@ function moverIzquierda() {
         detectarColision();
     }
 }function moverArriba(){
-    if (gatoY > 0 && tiempo > 0) {
+    if (gatoY > 0 && tiempo > 0 && puntaje < 6) {
         iniciarTemporizador();
         gatoY = gatoY - 10; 
         limpiarCanva();
@@ -69,7 +65,7 @@ function moverIzquierda() {
         detectarColision();
     }
 }function moverAbajo(){
-    if (gatoY + ALTO_GATO < 400 && tiempo > 0) {
+    if (gatoY + ALTO_GATO < 400 && tiempo > 0 && puntaje < 6) {
         iniciarTemporizador();
         gatoY = gatoY + 10; 
         limpiarCanva();
@@ -84,10 +80,19 @@ function moverIzquierda() {
         gatoY < comidaY + ALTO_COMIDA && 
         gatoY + ALTO_GATO > comidaY
     ) {
-        alert("¡Felicidades el GATO comio!");
         puntaje = puntaje + 1;
         mostrarEnSpan("puntos", puntaje);
-        aparecerComida();
+        
+        if (puntaje === 6) {
+            clearInterval(controlTiempo);
+            temporizadorActivo = false;
+            // CORRECCIÓN: Primero se redibuja para ver la colisión y luego va el alert
+            alert("¡Felicidades, eres el ganador!");
+            mostrarEnSpan("mensaje", "¡Ganaste el juego! Presiona REINICIAR.");
+        } else {
+            alert("¡Felicidades el GATO comio!");
+            aparecerComida();
+        }
     }
 }function aparecerComida(){
     comidaX = generarAleatorio(0, 600 - ANCHO_COMIDA);
@@ -96,16 +101,25 @@ function moverIzquierda() {
     limpiarCanva();
     graficarGato();
     graficarComida(); 
-}
-
-// TU FUNCIÓN ACTUALIZADA PARA DETENER EL JUEGO AL LLEGAR A 0
-function restarTiempo(){
+}function restarTiempo(){
    tiempo=tiempo-1;
    mostrarEnSpan("tiempo",tiempo);
     
    if (tiempo <= 0) {
-       clearInterval(controlTiempo); // Apaga el temporizador por completo
-       temporizadorActivo = false;    // Permite que se pueda reactivar en un futuro reinicio
-      
+       clearInterval(controlTiempo); 
+       temporizadorActivo = false;    
+       alert("Game Over");
+       mostrarEnSpan("mensaje", "¡Tiempo agotado! Fin del juego. Presiona REINICIAR.");
    }
+}function reiniciarJuego() {
+    // DETENER EL INTERVALO DE TIEMPO
+    clearInterval(controlTiempo);
+    temporizadorActivo = false;
+    tiempo = 10;
+    puntaje = 0;
+    mostrarEnSpan("tiempo", tiempo);
+    mostrarEnSpan("puntos", puntaje);
+    mostrarEnSpan("mensaje", ""); 
+    limpiarCanva();
+    iniciarJuego();
 }
