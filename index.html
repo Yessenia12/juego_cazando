@@ -1,38 +1,120 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <title>Juego Cazando</title>
-  <link rel="stylesheet" href="cazando.css">
-  <script src="utilitarios.js"></script>
+<html lang="es">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Juego Cazando</title>
+
+    <link rel="stylesheet" href="cazando.css">
+    <script src="utilitarios.js"></script>
 </head>
+
 <body onload="iniciarJuego();">
 
-  <h1>Juego Cazando</h1>
-  <p>Autor: YESSENIA QUINATOA</p>
-  <canvas id="areaJuego" width="600" height="400"></canvas>
+    <main class="juego">
 
+        <!-- ENCABEZADO -->
+        <header class="encabezado">
+            <div class="insignia">🎯</div>
 
-  <div class="controles">
-    <button onclick="moverArriba();">⬆</button>
-    <br>
-    <button onclick="moverIzquierda();">⬅</button>
-    <button onclick="moverAbajo();" >⬇</button>
-    <button onclick=" moverDerecha()">➡</button>
-  </div>
-  <div>
-    <button onclick="reiniciarJuego();">REINICIAR</button>
-  </div>
+            <div>
+                <h1>CAZANDO</h1>
+                <p class="subtitulo">¡Atrapa los objetivos y consigue la mayor puntuación!</p>
+            </div>
+        </header>
 
+        <!-- INFORMACIÓN DEL JUGADOR -->
+        <div class="jugador">
+            <span>👤 Jugador</span>
+            <strong>YESSENIA QUINATOA</strong>
+        </div>
 
-  <div class="panel">
-    <span>Puntos: <span id="puntos">0</span></span>
-    <span>Tiempo: <span id="tiempo">10</span></span>
-  </div>
+        <!-- PANEL DE PUNTOS Y TIEMPO -->
+        <section class="panel">
 
-  <p id="mensaje"></p>
-  <script src="cazando.js"></script>
+            <div class="estadistica puntos-box">
+                <span class="icono">🏆</span>
+                <div>
+                    <small>PUNTOS</small>
+                    <strong id="puntos">0</strong>
+                </div>
+            </div>
 
+            <div class="estadistica tiempo-box">
+                <span class="icono">⏱️</span>
+                <div>
+                    <small>TIEMPO</small>
+                    <strong><span id="tiempo">10</span>s</strong>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- ÁREA DEL JUEGO -->
+        <section class="zona-juego">
+
+            <div class="titulo-canvas">
+                <span>🎮</span>
+                ÁREA DE JUEGO
+            </div>
+
+            <div class="canvas-contenedor">
+                <canvas id="areaJuego" width="600" height="400"></canvas>
+            </div>
+
+        </section>
+
+        <!-- MENSAJE -->
+        <p id="mensaje"></p>
+
+        <!-- CONTROLES -->
+        <section class="controles-seccion">
+
+            <h2>CONTROLES</h2>
+            <p class="ayuda">Usa las flechas para mover al personaje</p>
+
+            <div class="controles">
+
+                <button onclick="moverArriba();" aria-label="Mover arriba">
+                    ⬆
+                </button>
+
+                <div class="fila-controles">
+                    <button onclick="moverIzquierda();" aria-label="Mover izquierda">
+                        ⬅
+                    </button>
+
+                    <button onclick="moverAbajo();" aria-label="Mover abajo">
+                        ⬇
+                    </button>
+
+                    <button onclick="moverDerecha();" aria-label="Mover derecha">
+                        ➡
+                    </button>
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- BOTÓN REINICIAR -->
+        <div class="zona-reinicio">
+            <button class="reiniciar" onclick="reiniciarJuego();">
+                🔄 REINICIAR PARTIDA
+            </button>
+        </div>
+
+        <footer>
+            <span>🎮 Cazando</span>
+            <span>•</span>
+            <span>¡Buena suerte!</span>
+        </footer>
+
+    </main>
+
+    <script src="cazando.js"></script>
 
 </body>
 </html>
